@@ -8,10 +8,10 @@ import csv
 
 def add_movie_data(apps, schema_editor):
 
-    with open("u.item", encoding="latin1") as infile:
-        movie_data = csv.reader(open("u.item"), delimiter='|')
-        for row in movie_data:
-            Movie = apps.get_model("movie_ratings_app", 'Movie')
+    with open("u.item", encoding='latin1') as infile:
+        csv.reader(infile, delimiter='|')
+        Movie = apps.get_model("movie_ratings_app", 'Movie')
+        for row in infile:
             Movie.objects.create(movie_id=row[0],
                                  movie_title=row[1],
                                  release_date=row[2],
@@ -37,15 +37,15 @@ def add_movie_data(apps, schema_editor):
                                  genre_war=row[22],
                                  genre_western=row[23]
                                  )
-    raise Exception('yay')
+    raise Exception('yay1')
 
 
 def add_rater_data(apps, schema_editor):
 
     with open("u.user") as infile:
         rater_data = csv.reader(open("u.user"), delimiter='|')
+        Rater = apps.get_model("movie_ratings_app", 'Rater')
         for row in rater_data:
-            Rater = apps.get_model("movie_ratings_app", 'Rater')
             Rater.objects.create(user_id=row[0],
                                  age=row[1],
                                  gender=row[2],
@@ -54,22 +54,24 @@ def add_rater_data(apps, schema_editor):
                                  )
 
 
-    raise Exception('yay')
+    raise Exception('yay2')
 
 
 def add_rating_data(apps, schema_editor):
 
     with open("u.data") as infile:
-        rating_data = csv.reader(open("u.data"), delimiter='\t')
+        rating_data = csv.reader(infile, delimiter='\t')
+        Rating = apps.get_model("movie_ratings_app", 'Rating')
 
         for row in rating_data:
-            Rating = apps.get_model("movie_ratings_app", 'Rater')
             Rating.objects.create(user_id=row[0],
-                                 item_id=row[1],
-                                 rating=row[2],
-                                 timestamp=row[3],
-                                 )
-    raise Exception('yay')
+                                  item_id=row[1],
+                                  rating=row[2],
+                                  timestamp=row[3],
+                                  )
+    raise Exception('yay3')
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -77,4 +79,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        #migrations.RunPython(add_movie_data),
+        #migrations.RunPython(add_rater_data),
+        migrations.RunPython(add_rating_data)
     ]
