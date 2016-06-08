@@ -40,7 +40,7 @@ class Movie(models.Model):
     genre_western = models.IntegerField()
 
     def __str__(self):
-        return str(self.movie_id)
+        return str(self.movie_title)
 
 class Rating(models.Model):
     user_id = models.ForeignKey(Rater)

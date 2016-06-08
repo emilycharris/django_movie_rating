@@ -61,24 +61,21 @@ def add_rater_data(apps, schema_editor):
 
 
 def add_rating_data(apps, schema_editor):
+    Rating = apps.get_model("movie_ratings_app", 'Rating')
+    Movie = apps.get_model("movie_ratings_app", 'Movie')
+    Rater = apps.get_model("movie_ratings_app", 'Rater')
 
     with open("u.data") as infile:
-        rating_data = csv.reader(infile, delimiter='\t')
-        Rating = apps.get_model("movie_ratings_app", 'Rating')
-        Movie = apps.get_model("movie_ratings_app", 'Movie')
-        Rater = apps.get_model("movie_ratings_app", 'Rater')
+        contents = csv.DictReader(infile, delimiter='\t', fieldnames=["user_id", "movie_id", "rating", "timestamp"])
+        for row in contents:
+            movie = Movie.objects.get(movie_id=row["movie_id"])
+            rater = Rater.objects.get(user_id=row["user_id"])
+            Rating.objects.create(
+                user_id=rater,
+                item_id=movie,
+                rating=int(row['rating']),
+                timestamp=int(row['timestamp']))
 
-        for row in rating_data:
-            print(row)
-            Rating.objects.create(user_id=Rater.objects.get(Rater.user_id),
-                                  item_id=Movie.objects.get(row[1]),
-                                  rating=row[2],
-                                  timestamp=row[3],
-                                  )
-    def __str__(self):
-        return self.rating
-
-    raise Exception('yay3')
 
 
 class Migration(migrations.Migration):
