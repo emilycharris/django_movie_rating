@@ -10,37 +10,46 @@ class Rater(models.Model):
     zip_code = models.CharField(max_length=10)
 
 
+    def __str__(self):
+        return str(self.user_id)
+
 class Movie(models.Model):
     movie_id = models.IntegerField()
     movie_title = models.CharField(max_length=100)
     release_date = models.CharField(max_length=12, default="")
     video_release_date = models.CharField(max_length=12)
     imdb_url = models.CharField(max_length=300)
-    genre_unknown = models.BooleanField()
-    genre_action = models.BooleanField()
-    genre_adventure = models.BooleanField()
-    genre_animation = models.BooleanField()
-    genre_children = models.BooleanField()
-    genre_comedy = models.BooleanField()
-    genre_crime = models.BooleanField()
-    genre_documentary = models.BooleanField()
-    genre_drama = models.BooleanField()
-    genre_fantasy = models.BooleanField()
-    genre_film_noir = models.BooleanField()
-    genre_horror = models.BooleanField()
-    genre_musical = models.BooleanField()
-    genre_mystery = models.BooleanField()
-    genre_romance = models.BooleanField()
-    genre_scifi = models.BooleanField()
-    genre_thriller = models.BooleanField()
-    genre_war = models.BooleanField()
-    genre_western = models.BooleanField()
+    genre_unknown = models.IntegerField()
+    genre_action = models.IntegerField()
+    genre_adventure = models.IntegerField()
+    genre_animation = models.IntegerField()
+    genre_children = models.IntegerField()
+    genre_comedy = models.IntegerField()
+    genre_crime = models.IntegerField()
+    genre_documentary = models.IntegerField()
+    genre_drama = models.IntegerField()
+    genre_fantasy = models.IntegerField()
+    genre_film_noir = models.IntegerField()
+    genre_horror = models.IntegerField()
+    genre_musical = models.IntegerField()
+    genre_mystery = models.IntegerField()
+    genre_romance = models.IntegerField()
+    genre_scifi = models.IntegerField()
+    genre_thriller = models.IntegerField()
+    genre_war = models.IntegerField()
+    genre_western = models.IntegerField()
+
+    def __str__(self):
+        return str(self.movie_id)
 
 class Rating(models.Model):
     user_id = models.ForeignKey(Rater)
     item_id = models.ForeignKey(Movie)
     rating = models.IntegerField()
     timestamp = models.IntegerField()
+
+    def __str__(self):
+        return str(self.rating)
 
 
 
